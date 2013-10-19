@@ -8,8 +8,12 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.support.HttpRequestWrapper;
 
+/**
+ * Interceptor to add <code>ctoken</code>, <code>utoken</code> and <code>DeviceId</code> headers to a HTTP request using
+ * <code>RestTemplate</code>.
+ */
 public class TokenHeaderInceptor implements ClientHttpRequestInterceptor {
-	
+
 	private final String ctoken;
 	private final String utoken;
 
@@ -19,11 +23,11 @@ public class TokenHeaderInceptor implements ClientHttpRequestInterceptor {
 	}
 
 	@Override
-	public ClientHttpResponse intercept(HttpRequest request, byte[] body,
-			ClientHttpRequestExecution execution) throws IOException {
-	    HttpRequestWrapper requestWrapper = new HttpRequestWrapper(request);
-	    requestWrapper.getHeaders().add("ctoken", ctoken);
-	    requestWrapper.getHeaders().add("utoken", utoken);
+	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+			throws IOException {
+		HttpRequestWrapper requestWrapper = new HttpRequestWrapper(request);
+		requestWrapper.getHeaders().add("ctoken", ctoken);
+		requestWrapper.getHeaders().add("utoken", utoken);
 		requestWrapper.getHeaders().add("DeviceId", "f8280cf34708c7b5a8bd2ed93dcd3c8148d00000");
 		return execution.execute(requestWrapper, body);
 	}

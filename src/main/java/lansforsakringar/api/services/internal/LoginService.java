@@ -25,25 +25,6 @@ public class LoginService {
 
 	private final RestTemplate restTemplate;
 
-	private class LoginTokenHeaderInceptor implements ClientHttpRequestInterceptor {
-
-		private final String ctoken;
-
-		public LoginTokenHeaderInceptor(String ctoken) {
-			this.ctoken = ctoken;
-		}
-
-		@Override
-		public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
-				throws IOException {
-			HttpRequestWrapper requestWrapper = new HttpRequestWrapper(request);
-			requestWrapper.getHeaders().add("ctoken", ctoken);
-			requestWrapper.getHeaders().add("DeviceId", "f8280cf34708c7b5a8bd2ed93dcd3c8148d00000");
-			return execution.execute(requestWrapper, body);
-		}
-
-	}
-
 	public LoginService(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
@@ -73,16 +54,38 @@ public class LoginService {
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		interceptors.add(new LoginTokenHeaderInceptor(ctoken));
 		restTemplate.setInterceptors(interceptors);
-	
+
 		AuthenticateRequest request = new AuthenticateRequest();
 		request.setSsn(customerId);
 		request.setPin(pinCode);
-	
+
 		AuthenticateResponse authenticateResponse = restTemplate.postForObject(RestClient.AUTHENTICATE_URL, request,
 				AuthenticateResponse.class);
-	
+
 		String utoken = authenticateResponse.getTicket();
 		return utoken;
+	}
+
+	/**
+	 * Interceptor to add <code>ctoken</code> and <code>DeviceId</code> headers to a HTTP request using
+	 * <code>RestTemplate</code>.
+	 */
+	private class LoginTokenHeaderInceptor implements ClientHttpRequestInterceptor {
+		private final String ctoken;
+	
+		public LoginTokenHeaderInceptor(String ctoken) {
+			this.ctoken = ctoken;
+		}
+	
+		@Override
+		public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+				throws IOException {
+			HttpRequestWrapper requestWrapper = new HttpRequestWrapper(request);
+			requestWrapper.getHeaders().add("ctoken", ctoken);
+			requestWrapper.getHeaders().add("DeviceId", "f8280cf34708c7b5a8bd2ed93dcd3c8148d00000");
+			return execution.execute(requestWrapper, body);
+		}
+	
 	}
 
 }
