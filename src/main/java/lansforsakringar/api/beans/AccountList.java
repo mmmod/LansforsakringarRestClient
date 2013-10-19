@@ -5,10 +5,10 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AccountsResponse {
+public class AccountList {
 	private List<Account> accounts;
 
-	public AccountsResponse() {
+	public AccountList() {
 		// ...
 	}
 

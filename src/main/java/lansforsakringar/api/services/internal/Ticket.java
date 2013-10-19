@@ -1,4 +1,4 @@
-package lansforsakringar.api.beans;
+package lansforsakringar.api.services.internal;
 
 public class Ticket {
 	private String ctoken;

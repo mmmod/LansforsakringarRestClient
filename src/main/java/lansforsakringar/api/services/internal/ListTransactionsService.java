@@ -1,9 +1,9 @@
 package lansforsakringar.api.services.internal;
 
 import lansforsakringar.api.beans.Account;
-import lansforsakringar.api.beans.TransactionsRequest;
-import lansforsakringar.api.beans.TransactionsResponse;
+import lansforsakringar.api.beans.TransactionList;
 import lansforsakringar.api.services.RestClient;
+import lansforsakringar.api.services.internal.transfer.TransactionsRequest;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -15,14 +15,14 @@ public class ListTransactionsService {
 		this.restTemplate = restTemplate;
 	}
 
-	public TransactionsResponse getTransactions(Account account, Integer page) {
+	public TransactionList getTransactions(Account account, Integer page) {
 		TransactionsRequest request = new TransactionsRequest();
 		request.setRequestedPage(page);
 		request.setLedger(account.getLedger());
 		request.setAccountNumber(account.getAccountNumber());
 
-		TransactionsResponse response = restTemplate.postForObject(RestClient.LIST_TRANSACTIONS_URL, request,
-				TransactionsResponse.class);
+		TransactionList response = restTemplate.postForObject(RestClient.LIST_TRANSACTIONS_URL, request,
+				TransactionList.class);
 		return response;
 	}
 

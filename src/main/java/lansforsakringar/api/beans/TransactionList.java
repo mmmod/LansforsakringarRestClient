@@ -5,12 +5,12 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TransactionsResponse {
+public class TransactionList {
 	private Boolean hasMore;
 	private Integer nextSequenceNumber;
 	private List<Transaction> transactions;
 
-	public TransactionsResponse() {
+	public TransactionList() {
 		// ...
 	}
 

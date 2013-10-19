@@ -7,12 +7,14 @@ import java.util.List;
 
 import lansforsakringar.api.beans.Account;
 import lansforsakringar.api.beans.AccountType;
-import lansforsakringar.api.beans.AccountsResponse;
-import lansforsakringar.api.beans.Ticket;
-import lansforsakringar.api.beans.TransactionsResponse;
+import lansforsakringar.api.beans.AccountList;
+import lansforsakringar.api.beans.CardList;
+import lansforsakringar.api.beans.TransactionList;
 import lansforsakringar.api.services.internal.ListAccountService;
+import lansforsakringar.api.services.internal.ListCardsService;
 import lansforsakringar.api.services.internal.ListTransactionsService;
 import lansforsakringar.api.services.internal.LoginService;
+import lansforsakringar.api.services.internal.Ticket;
 import lansforsakringar.api.services.internal.TokenHeaderInceptor;
 
 import org.apache.commons.codec.DecoderException;
@@ -26,6 +28,7 @@ public class RestClient {
 	public static final String AUTHENTICATE_URL = BASE_URL + "/security/user";
 	public static final String LIST_ACCOUNTS_URL = BASE_URL + "/account/bytype";
 	public static final String LIST_TRANSACTIONS_URL = BASE_URL + "/account/transaction";
+	public static final String LIST_CARDS_URL = BASE_URL + "/card/list";
 	
 	
 	private final RestTemplate restTemplate;
@@ -56,12 +59,17 @@ public class RestClient {
 		return ticket;
 	}
 
-	public AccountsResponse getAccounts(AccountType accountType) {
+	public AccountList getAccounts(AccountType accountType) {
 		return new ListAccountService(restTemplate).getAccounts(accountType);
 	}
 
-	public TransactionsResponse getTransactions(Account account, Integer page) {
+	public CardList getCards() {
+		return new ListCardsService(restTemplate).getCards();
+	}
+
+	public TransactionList getTransactions(Account account, Integer page) {
 		return new ListTransactionsService(restTemplate).getTransactions(account, page);
 	}
+
 
 }

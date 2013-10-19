@@ -1,8 +1,9 @@
 package lansforsakringar.api.services;
 
 import lansforsakringar.api.beans.AccountType;
-import lansforsakringar.api.beans.AccountsResponse;
-import lansforsakringar.api.beans.TransactionsResponse;
+import lansforsakringar.api.beans.AccountList;
+import lansforsakringar.api.beans.CardList;
+import lansforsakringar.api.beans.TransactionList;
 
 import org.fest.assertions.Assertions;
 import org.junit.Assume;
@@ -29,11 +30,16 @@ public class RestClientIntegrationTest {
 		RestClient client = RestClient.createAuthenticatedClient(findProperty("CUSTOMERID"), findProperty("PINCODE"));
 
 		// List my SAVINGS accounts
-		AccountsResponse accounts = client.getAccounts(AccountType.SAVING);
+		AccountList accounts = client.getAccounts(AccountType.SAVING);
+		Assertions.assertThat(accounts.getAccounts()).isNotEmpty();
 
 		// Fetch first page of transactions (20 of 'em) from the first of my accounts
-		TransactionsResponse transactions = client.getTransactions(accounts.getAccounts().get(0), 0);
+		TransactionList transactions = client.getTransactions(accounts.getAccounts().get(0), 0);
 		Assertions.assertThat(transactions.getTransactions()).hasSize(20);
+		
+		// List my DEBIT and CREDIT cards
+		CardList cards = client.getCards();
+		Assertions.assertThat(cards.getCards()).isNotEmpty();
 	}
 
 	private String findProperty(String id) {

@@ -13,13 +13,12 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.web.client.RestTemplate;
 
-import lansforsakringar.api.beans.AuthenticateRequest;
-import lansforsakringar.api.beans.AuthenticateResponse;
-import lansforsakringar.api.beans.HandshakeResponse;
-import lansforsakringar.api.beans.Ticket;
-import lansforsakringar.api.beans.TokenChallengeRequest;
-import lansforsakringar.api.beans.TokenChallengeResponse;
 import lansforsakringar.api.services.RestClient;
+import lansforsakringar.api.services.internal.transfer.AuthenticateRequest;
+import lansforsakringar.api.services.internal.transfer.AuthenticateResponse;
+import lansforsakringar.api.services.internal.transfer.HandshakeResponse;
+import lansforsakringar.api.services.internal.transfer.TokenChallengeRequest;
+import lansforsakringar.api.services.internal.transfer.TokenChallengeResponse;
 
 public class LoginService {
 

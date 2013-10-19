@@ -1,4 +1,4 @@
-package lansforsakringar.api.beans;
+package lansforsakringar.api.services.internal.transfer;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

@@ -1,9 +1,9 @@
 package lansforsakringar.api.services.internal;
 
 import lansforsakringar.api.beans.AccountType;
-import lansforsakringar.api.beans.AccountsRequest;
-import lansforsakringar.api.beans.AccountsResponse;
+import lansforsakringar.api.beans.AccountList;
 import lansforsakringar.api.services.RestClient;
+import lansforsakringar.api.services.internal.transfer.AccountsRequest;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -17,10 +17,10 @@ public class ListAccountService {
 		
 	}
 
-	public AccountsResponse getAccounts(AccountType accountType) {
+	public AccountList getAccounts(AccountType accountType) {
 		AccountsRequest request = new AccountsRequest();
 		request.setAccountType(accountType.toString());
-		AccountsResponse accountsResponse = restTemplate.postForObject(RestClient.LIST_ACCOUNTS_URL, request, AccountsResponse.class);
+		AccountList accountsResponse = restTemplate.postForObject(RestClient.LIST_ACCOUNTS_URL, request, AccountList.class);
 		return accountsResponse;
 	}
 

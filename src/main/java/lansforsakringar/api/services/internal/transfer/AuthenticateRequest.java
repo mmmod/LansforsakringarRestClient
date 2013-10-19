@@ -1,4 +1,4 @@
-package lansforsakringar.api.beans;
+package lansforsakringar.api.services.internal.transfer;
 
 public class AuthenticateRequest {
 	private String ssn;
